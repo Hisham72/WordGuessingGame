@@ -38,8 +38,9 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(800, 450);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
-            Text = "Form1";
+            Text = "خمن الكلمة";
             ResumeLayout(false);
         }
 
