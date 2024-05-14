@@ -19,7 +19,7 @@ namespace WordGuessingGame
             {
                 photoOf.Add(word[i], $"{i + 1}.png");
             }
-            pointsLabel.Text = ToArabicNumber(score.ToString());
+            pointsLabel.Text = score.ToString();
             ResetLabel();
             ResetImage();
         }
@@ -70,7 +70,7 @@ namespace WordGuessingGame
             MessageBox.Show("أحسنت!", "", MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, MessageBoxOptions.RtlReading);
             cur = (cur + 1) % word.Length;
             score++;
-            pointsLabel.Text = ToArabicNumber(score.ToString());
+            pointsLabel.Text = score.ToString();
             ResetKeyboard();
             ResetLabel();
             ResetImage();
@@ -81,7 +81,7 @@ namespace WordGuessingGame
             MessageBox.Show("أخطأت! لكن حاول فى الكلمات الأخرى.", "", MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, MessageBoxOptions.RtlReading);
             cur = (cur + 1) % word.Length;
             score = Math.Max(score - 1, 0);
-            pointsLabel.Text = ToArabicNumber(score.ToString());
+            pointsLabel.Text = score.ToString();
             mistakes = 0;
             ResetKeyboard();
             ResetLabel();
