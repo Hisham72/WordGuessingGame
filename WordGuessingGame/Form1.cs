@@ -1,4 +1,5 @@
-﻿using System.Media;
+﻿using System.IO;
+using System.Media;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -32,6 +33,7 @@ namespace WordGuessingGame
 
         private void ResetLabel()
         {
+            label1.ForeColor = SystemColors.ButtonFace;
             var words = word[cur].Split(' ');
             label1.Text = new string('-', words[0].Length);
             if (words.Length > 1)
@@ -67,10 +69,15 @@ namespace WordGuessingGame
 
         private void Victory()
         {
-            MessageBox.Show("أحسنت!", "", MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, MessageBoxOptions.RtlReading);
+            //MessageBox.Show("أحسنت!", "", MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, MessageBoxOptions.RtlReading);
             cur = (cur + 1) % word.Length;
             score++;
             pointsLabel.Text = score.ToString();
+            label1.ForeColor = Color.Lime;
+            Application.DoEvents();
+            PlaySound("claps-44774.wav");
+            Thread.Sleep(4000);
+            PlayBackground();
             ResetKeyboard();
             ResetLabel();
             ResetImage();
@@ -95,10 +102,18 @@ namespace WordGuessingGame
             key.Enabled = false;
         }
 
-        private void PlayClickSound()
+        private void PlaySound(string path)
         {
-            SoundPlayer simpleSound = new SoundPlayer(@"Click On.wav");
+            SoundPlayer simpleSound = new SoundPlayer(path);
             simpleSound.Play();
+
+        }
+
+        private async void PlayClickSound()
+        {
+            SoundPlayer simpleSound = new SoundPlayer("Click On.wav");
+            simpleSound.LoadAsync();
+            await Task.Run(() => simpleSound.Play());
         }
 
         private void Keyboard_Click(object sender, EventArgs e)
@@ -135,15 +150,17 @@ namespace WordGuessingGame
                 if (!label1.Text.Contains('-'))
                 {
                     Victory();
-                    return;
                 }
             }
         }
-
-        private void Form1_Load(object sender, EventArgs e)
+        private void PlayBackground()
         {
             SoundPlayer background = new SoundPlayer(@"underwater-waves-5983.wav");
             background.PlayLooping();
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            PlayBackground();
         }
     }
 }
